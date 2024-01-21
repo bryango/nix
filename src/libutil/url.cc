@@ -32,7 +32,7 @@ ParsedURL parseURL(const std::string & url)
 
         auto transportIsFile = parseUrlScheme(scheme).transport == "file";
 
-        if (authority && *authority != "" && transportIsFile)
+        if (authority && *authority != "" && *authority != "." && transportIsFile)
             throw BadURL("file:// URL '%s' has unexpected authority '%s'",
                 url, *authority);
 
