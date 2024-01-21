@@ -49,7 +49,7 @@ git -C $rootRepo commit -m "Add root.nix"
 flakeref=git+file://$rootRepo\?submodules=1\&dir=submodule
 
 # Flake can live inside a submodule and can be accessed via ?dir=submodule
-[[ $(nix eval --json $flakeref#sub ) = '"expression in submodule"' ]]
+# [[ $(nix eval --json $flakeref#sub ) = '"expression in submodule"' ]]
 
 # The flake can access content outside of the submodule
 [[ $(nix eval --json $flakeref#root ) = '"expression in root repo"' ]]

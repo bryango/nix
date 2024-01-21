@@ -232,7 +232,7 @@ struct GitInputScheme : InputScheme
 
         Input input;
         input.attrs = attrs;
-        auto url = fixGitURL(getStrAttr(attrs, "url"));
+        auto url = getStrAttr(attrs, "url");
         parseURL(url);
         input.attrs["url"] = url;
         getShallowAttr(input);
