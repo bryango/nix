@@ -6,7 +6,7 @@ namespace nix {
 CanonPath CanonPath::root = CanonPath("/");
 
 CanonPath::CanonPath(std::string_view raw)
-    : path(absPath(raw, "/"))
+    : path(absPath(raw))
 { }
 
 CanonPath::CanonPath(std::string_view raw, const CanonPath & root)
