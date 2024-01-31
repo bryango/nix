@@ -37,6 +37,8 @@ path0_=$(nix eval --impure --raw --expr "(builtins.fetchTree { type = \"git\"; u
 [[ $path0 = $path0_ ]]
 path0_=$(nix eval --impure --raw --expr "(builtins.fetchTree git+file://$TEST_ROOT/worktree).outPath")
 [[ $path0 = $path0_ ]]
+path0_=$(cd "$TEST_ROOT" && nix eval --impure --raw --expr "(builtins.fetchTree git+file:./worktree).outPath")
+[[ $path0 = $path0_ ]]
 export _NIX_FORCE_HTTP=1
 [[ $(tail -n 1 $path0/hello) = "hello" ]]
 
