@@ -430,8 +430,19 @@ struct GitInputScheme : InputScheme
 
         // If this is a local directory and no ref or revision is
         // given, then allow the use of an unclean working tree.
-        if (!input.getRef() && !input.getRev() && repoInfo.isLocal)
-            repoInfo.workdirInfo = GitRepo::getCachedWorkdirInfo(repoInfo.url);
+        if (!input.getRef() && !input.getRev() && repoInfo.isLocal) {
+            //
+            // FIXME: here we make a possibly relative path absolute.
+            // This allows relative git flake inputs to be resolved against the
+            // **current working directory** (as in POSIX), which tends to
+            // work out ok in the context of flakes, but is the wrong behavior,
+            // as it should resolve against the flake.nix base directory instead.
+            //
+            // See: https://discourse.nixos.org/t/57783 and #9708
+            //
+            auto abs_path = std::filesystem::absolute(repoInfo.url);
+            repoInfo.workdirInfo = GitRepo::getCachedWorkdirInfo(abs_path);
+        }
 
         return repoInfo;
     }
